@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'u!5ygj^6w&6nw9amx7=srs-gomhnjzd(5a&n=$z81^y^flps=4'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -30,8 +30,15 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+# USERNAME and PASSWORD
+DB_USERNAME = os.getenv('USERNAME')
+DB_PASSWORD = os.getenv('PASSWORD')
+DB_PORT = os.getenv('PORT', '3306')
+
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
+    'stockData.apps.StockDataConfig',
+    'django_mysql',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,12 +83,12 @@ WSGI_APPLICATION = 'stockmanager.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'stock',
-        'USER': 'stockholder',
-        'PASSWORD': 'password',
+        'USER': DB_USERNAME,
+        'PASSWORD': DB_PASSWORD,
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': DB_PORT,
     }
 }
 
