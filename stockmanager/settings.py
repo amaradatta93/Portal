@@ -36,7 +36,7 @@ DB_PASSWORD = os.getenv('PASSWORD')
 DB_PORT = os.getenv('PORT', '3306')
 
 INSTALLED_APPS = [
-    'users.apps.UsersConfig',
+    'dashboard.apps.DashboardConfig',
     'stockData.apps.StockDataConfig',
     'django_mysql',
     'django.contrib.admin',
