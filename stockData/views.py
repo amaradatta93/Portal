@@ -1,11 +1,9 @@
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
 
-from stockData.forms import StockForm
-from stockData.models import StockData
+from .forms import StockForm
+from .models import StockData
 
 
-@csrf_exempt
 def add_user_ticker(request):
     saved = False
     stockdata = None

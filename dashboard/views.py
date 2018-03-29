@@ -1,8 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 
 from dashboard.utils import get_all, raw_data
 
 
+@login_required
 def obtain_latest_data(request):
     company_ticker = get_all()
     parsed_data = {}
