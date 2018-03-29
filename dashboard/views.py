@@ -12,5 +12,5 @@ def obtain_latest_data(request):
         json_data = raw_data(tckr)
         date = json_data['Meta Data']['3. Last Refreshed']
         parsed_data[tckr] = {'Meta Data': json_data['Meta Data'],
-                             'Current Price': json_data['Time Series (60min)'][date]}
+                             'Current Value': json_data['Time Series (60min)'][date]}
     return JsonResponse(parsed_data)
