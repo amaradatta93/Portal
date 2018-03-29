@@ -1,27 +1,25 @@
-from django.http import JsonResponse
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 
-from stockData.utils import get_all, raw_data
-
-
-def obtain_latest_data(request):
-    company_ticker = get_all()
-    parsed_data = {}
-    for tckr in company_ticker:
-        json_data = raw_data(tckr)
-        date = json_data['Meta Data']['3. Last Refreshed']
-        parsed_data[tckr] = {'Meta Data': json_data['Meta Data'],
-                             'Current Price': json_data['Time Series (60min)'][date]}
-    return JsonResponse(parsed_data)
+from stockData.forms import StockForm
+from stockData.models import StockData
 
 
+@csrf_exempt
 def add_user_ticker(request):
-    pass
-    # if request.method == 'POST':
-    #     stockData = StockData()
-    #     stockData.company_name = ''
-    #     stockData.company_ticker_name= ''
-    #     stockData.save()
+    saved = False
+    stockdata = None
+    if request.method == 'POST':
+        stock_form = StockForm(request.POST, request.FILES)
+
+        if stock_form.is_valid():
+            stockdata = StockData()
+            stockdata.company_name = stock_form.cleaned_data["name"]
+            stockdata.company_ticker_name = stock_form.cleaned_data["ticker_name"]
+            stockdata.save()
+            saved = True
+    return render(request, 'saved.html', {'saved': saved, 'id': stockdata.company_name + ' data'})
 
 
-def delete__user_ticker(request):
+def delete_user_ticker(request):
     pass
