@@ -1,5 +1,6 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.shortcuts import render
 
 from .forms import StockForm
 from .models import StockData
@@ -23,12 +24,9 @@ def add_user_ticker(request):
             stockdata.company_ticker_name = stock_form.cleaned_data['ticker_name']
             stockdata.save()
             saved = True
-            print(stockdata.company_name, stockdata.company_ticker_name)
-            # return render(request, 'saved.html', {'saved': saved})
-            return HttpResponse(stockdata.company_name)
+            return render(request, 'saved.html', {'saved': saved})
         else:
-            return HttpResponse('hi')
-        # return JsonResponse({'name':stockdata.company_name, 'tckr': stockdata.company_ticker_name})
+            return messages.error(request, "Error")
 
 
 def delete_user_ticker(request):
