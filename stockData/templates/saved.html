@@ -2,7 +2,7 @@
     <div class="col-lg-12">
         {% if saved %}
         <p><strong>Your stock data was saved.</strong></p>
-        <p><a class="btn btn-success" href="{% url 'stocks:obtain_latest_data' %}"><i class="fa fa-link"></i> View all your stock price </a></p>
+        <p><a class="btn btn-success" href="{% url 'dashboard:obtain_latest_data' %}"><i class="fa fa-link"></i> View all your stock price </a></p>
         {% endif %}
 
         {% if not saved %}

@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.shortcuts import render
 
 from dashboard.utils import get_all, raw_data
 
@@ -13,4 +14,5 @@ def obtain_latest_data(request):
         date = json_data['Meta Data']['3. Last Refreshed']
         parsed_data[tckr] = {'Meta Data': json_data['Meta Data'],
                              'Current Value': json_data['Time Series (60min)'][date]}
-    return JsonResponse(parsed_data)
+    # return JsonResponse(parsed_data)
+    return render(request, 'dashboard.html', parsed_data)
