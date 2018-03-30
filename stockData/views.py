@@ -8,8 +8,6 @@ from .models import StockData
 
 @login_required
 def add_user_ticker(request):
-    saved = False
-    stockdata = {}
 
     if request.method == 'POST':
         stock_form = StockForm(request.POST)
