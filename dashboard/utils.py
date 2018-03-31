@@ -3,6 +3,8 @@ from urllib.parse import urlencode
 
 import requests
 
+from stockData.models import StockData
+
 API_KEY = os.getenv('API_KEY')
 
 
@@ -22,7 +24,6 @@ def raw_data(ticker):
     return json_stock_data
 
 
-def get_all():
-    # stocks = get_object_or_404(StockData)
-    # return HttpResponse(list(stocks.company_ticker_name))
-    return ['MSFT', 'FB', 'AAPL', 'GOOGL', 'NFLX']
+def get_all(stockholder):
+    stocks = StockData.objects.filter(stockholder=stockholder)
+    return stocks
