@@ -2,8 +2,8 @@
 {% block content %}
 
 <div class="col-lg-6">
-    <h2> Add Stocks Here: </h2>
-    <form name="form" enctype="multipart/form-data" action="{% url 'stocks:add_user_ticker' %}"
+    <h2> Delete Stocks Here: </h2>
+    <form name="form" enctype="multipart/form-data" action="{% url 'stocks:delete_user_ticker' %}"
           method="POST">
 
         {% csrf_token %}
@@ -17,7 +17,7 @@
             <input type="text" class="form-control" id="ticker_name" name="ticker_name" placeholder="Ticker">
         </div>
         <div class="form-group row justify-content-center">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Confirm Delete</button>
         </div>
     </form>
 </div>
