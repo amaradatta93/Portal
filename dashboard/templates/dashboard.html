@@ -3,42 +3,50 @@
 
 <div class="row">
     <div class="col-lg-12">
+        {% if parsed_data %}
         <p><strong> Your stock data is here: </strong></p>
         {% for data in parsed_data %}
         <div>
-            {{ data.ticker }}: {{ data.price.open }}
+            Company : {{ data.name }}
         </div>
-        <!--<table class="table">-->
-            <!--<thead>-->
-            <!--<tr>-->
-                <!--<th scope="col">#</th>-->
-                <!--<th scope="col">First</th>-->
-            <!--</tr>-->
-            <!--</thead>-->
-            <!--<tbody>-->
-            <!--<tr>-->
-                <!--<th scope="row">1</th>-->
-                <!--<td>Mark</td>-->
-                <!--<td>Otto</td>-->
-                <!--<td>@mdo</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-                <!--<th scope="row">2</th>-->
-                <!--<td>Jacob</td>-->
-                <!--<td>Thornton</td>-->
-                <!--<td>@fat</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-                <!--<th scope="row">3</th>-->
-                <!--<td>Larry</td>-->
-                <!--<td>the Bird</td>-->
-                <!--<td>@twitter</td>-->
-            <!--</tr>-->
-            <!--</tbody>-->
-        <!--</table>-->
-
+        <div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Ticker</th>
+                    <th scope="col">Open Value</th>
+                    <th scope="col">Close Value</th>
+                    <th scope="col">High</th>
+                    <th scope="col">Low</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">{{ data.ticker }}</th>
+                    <td>{{ data.price.open }} </td>
+                    <td>{{ data.price.low }} </td>
+                    <td>{{ data.price.high }} </td>
+                    <td>{{ data.price.low }}</td>
+                </tr>
+                <!--<tr>-->
+                    <!--<th scope="row">2</th>-->
+                    <!--<td>Jacob</td>-->
+                    <!--<td>Thornton</td>-->
+                    <!--<td>@fat</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<th scope="row">3</th>-->
+                    <!--<td>Larry</td>-->
+                    <!--<td>the Bird</td>-->
+                    <!--<td>@twitter</td>-->
+                <!--</tr>-->
+                </tbody>
+            </table>
+        </div>
         {% endfor %}
+        {% else %}
         <p><strong> Your don't have any stock data here </strong></p>
+        {% endif %}
     </div>
 </div>
 
