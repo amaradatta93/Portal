@@ -110,7 +110,7 @@ if db_type == 'mysql':
 elif db_type == 'postgres':
     postgres_settings = get_postgres_settings(os.getenv('DATABASE_URL'))
     DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.postgres',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': postgres_settings['name'],
         'USER': postgres_settings['username'],
         'PASSWORD': postgres_settings['password'],
