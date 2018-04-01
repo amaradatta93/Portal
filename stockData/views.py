@@ -24,11 +24,11 @@ def add_user_ticker(request):
             except IntegrityError:
                 messages.warning(request, 'You already saved this stock.')
 
-            return redirect('/dashboard')
+            return redirect('/')
 
         else:
             messages.error(request, 'Enter a valid input')
-            return redirect('/dashboard')
+            return redirect('/')
 
 
 @login_required
@@ -48,4 +48,4 @@ def delete_user_ticker(request):
 
         else:
             messages.error(request, 'Please enter a valid ticker')
-        return redirect('/dashboard')
+        return redirect('/')
