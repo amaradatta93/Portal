@@ -24,6 +24,7 @@ def add_user_ticker(request):
             return messages.error(request, "Error")
 
 
+@login_required
 def delete_user_ticker(request):
     if request.method == 'POST':
         stock_form = StockForm(request.POST)

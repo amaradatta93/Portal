@@ -13,6 +13,7 @@
             <thead>
             <tr>
                 <th scope="col">Ticker</th>
+                <th scope="col">Date</th>
                 <th scope="col">Open Value</th>
                 <th scope="col">Close Value</th>
                 <th scope="col">High</th>
@@ -22,6 +23,7 @@
             <tbody>
             <tr>
                 <th scope="row">{{ data.ticker }}</th>
+                <td>{{ data.date }}</td>
                 <td>{{ data.price.open }}</td>
                 <td>{{ data.price.low }}</td>
                 <td>{{ data.price.high }}</td>
