@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import re
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -27,8 +27,22 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
+
+POSTGRES_URL_REGEX = re.compile(
+    r'^postgres:\/\/(?P<username>.*?):(?P<password>.*?)@(?P<host>.*?):(?P<port>\d+)/(?P<db>.*?)$')
+
+
+def get_postgres_settings(url):
+    matches = POSTGRES_URL_REGEX.match(url)
+    return {
+        'name': matches.group('db'),
+        'username': matches.group('username'),
+        'password': matches.group('password'),
+        'host': matches.group('host'),
+        'port': matches.group('port')
+    }
+
 
 # USERNAME and PASSWORD
 DB_USERNAME = os.getenv('USERNAME')
@@ -77,12 +91,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'stockmanager.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
+db_type = os.getenv('DB_TYPE', 'mysql')
+
+DATABASES = {}
+
+if db_type == 'mysql':
+    DATABASES['default'] = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'stock',
         'USER': DB_USERNAME,
@@ -90,7 +107,16 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': DB_PORT,
     }
-}
+elif db_type == 'postgres':
+    postgres_settings = get_postgres_settings(os.getenv('DATABASE_URL'))
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.postgres',
+        'NAME': postgres_settings['name'],
+        'USER': postgres_settings['username'],
+        'PASSWORD': postgres_settings['password'],
+        'HOST': postgres_settings['host'],
+        'PORT': postgres_settings['port'],
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -110,7 +136,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -124,11 +149,9 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
