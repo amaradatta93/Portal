@@ -14,3 +14,6 @@ class StockData(models.Model):
             'company_name': self.company_name,
             'company_ticker_name': self.company_ticker_name
         }
+
+    class Meta:
+        unique_together = [('stockholder', 'company_ticker_name'), ('stockholder', 'company_name')]
