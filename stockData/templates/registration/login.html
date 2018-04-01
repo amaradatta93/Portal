@@ -1,42 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>StockLife</title>
-</head>
-<body>
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+{% extends 'index.html' %}
+{% block content %}
 
-{% if next %}
-{% if user.is_authenticated %}
-<p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-{% else %}
-<p>Please login to see this page.</p>
-{% endif %}
-{% endif %}
+<div class="col-lg-12 mb-3">
+    <h1 style="text-align: center">Welcome to StockBoard</h1>
+    {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
 
-<form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
+    {% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+        please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+    {% endif %}
+</div>
+<div class="col-lg-6 mt-3" style="text-align: center">
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
 
-    <div>
-        <td>{{ form.username.label_tag }}</td>
-        <td>{{ form.username }}</td>
-    </div>
-    <div>
-        <td>{{ form.password.label_tag }}</td>
-        <td>{{ form.password }}</td>
-    </div>
+        <div class="form-group">
+            <div class="col-lg">
+                <td>{{ form.username.label_tag }}</td>
+                <td>{{ form.username }}</td>
+            </div>
+        </div>
 
-    <div>
-        <input type="submit" value="login"/>
-        <input type="hidden" name="next" value="{% url 'dashboard:obtain_latest_data' %}"/>
-    </div>
-</form>
+        <div class="form-group">
+            <div class="col-lg">
+                <td>{{ form.password.label_tag }}</td>
+                <td>{{ form.password }}</td>
+            </div>
+        </div>
 
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-</body>
-</html>
+        <div class="form-group">
+            <div class="col-lg">
+                <input type="submit" value="login"/>
+                <input type="hidden" name="next" value="{% url 'dashboard:obtain_latest_data' %}"/>
+            </div>
+        </div>
+    </form>
+
+    {# Assumes you setup the password_reset view in your URLconf #}
+    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+</div>
+
+{% endblock %}
