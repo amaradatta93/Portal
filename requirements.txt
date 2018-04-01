@@ -1,0 +1,5 @@
+requests
+django
+django_mysql
+gunicorn
+mysqlclient
