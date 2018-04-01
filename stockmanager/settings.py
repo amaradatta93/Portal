@@ -54,6 +54,7 @@ DB_PORT = os.getenv('PORT', '3306')
 INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
     'stockData.apps.StockDataConfig',
+    'bootstrap4',
     'django_mysql',
     'django.contrib.admin',
     'django.contrib.auth',
