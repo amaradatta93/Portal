@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .forms import StockForm, DeleteForm
 from .models import StockData
@@ -9,7 +9,6 @@ from .models import StockData
 @login_required
 def add_user_ticker(request):
     if request.method == 'POST':
-        saved = False
         stock_form = StockForm(request.POST)
 
         if stock_form.is_valid():
@@ -32,6 +31,12 @@ def delete_user_ticker(request):
         if stock_form.is_valid():
             ticker_name = stock_form.cleaned_data['ticker_name']
             stockdata = StockData.objects.filter(company_ticker_name=ticker_name)
-            stockdata.delete()
-            deleted = True
-            return render(request, 'deleted.html', {'deleted': deleted})
+            if stockdata:
+                stockdata.delete()
+                messages.success(request, 'Successfully deleted the stock')
+            else:
+                messages.warning(request, 'No such stocks exist')
+
+        else:
+            messages.error(request, 'Please enter a valid ticker')
+        return redirect('/dashboard')

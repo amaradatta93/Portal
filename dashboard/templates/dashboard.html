@@ -26,6 +26,21 @@
                 <td>{{ data.price.low }}</td>
                 <td>{{ data.price.high }}</td>
                 <td>{{ data.price.low }}</td>
+                <td>
+                    <form name="form" enctype="multipart/form-data" action="{% url 'stocks:delete_user_ticker' %}"
+                          method="POST">
+
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <input type="hidden" class="form-control" id="ticker_name" name="ticker_name"
+                                   value="{{ data.ticker }}"
+                                   placeholder="Ticker">
+                        </div>
+                        <div class="form-group row justify-content-center">
+                            <button type="submit" class="btn btn-danger">X</button>
+                        </div>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
             </tbody>

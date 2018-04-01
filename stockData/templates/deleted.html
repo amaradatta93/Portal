@@ -8,10 +8,10 @@
         <p><a class="btn btn-success" href="{% url 'dashboard:delete_stock' %}"><i class="fa fa-link"></i> Delete one more
         </a></p>
         {% else %}
-        <p><strong>Your stock data was not deleted.</strong></p>
+        <p><strong>Your stock data was not deleted. Try again </strong></p>
         {% endif %}
-        <p><a class="btn btn-primary" href="{% url 'dashboard:obtain_latest_data' %}"><i class="fa fa-chevron-left"></i>
-            Go back to the dashboard</a></p>
+        <p><a class="btn btn-primary" href="{% url 'dashboard:delete_stock' %}"><i class="fa fa-chevron-left"></i>
+            Delete another stock</a></p>
     </div>
 </div>
 
