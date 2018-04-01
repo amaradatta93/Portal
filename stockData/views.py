@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 
 from .forms import StockForm, DeleteForm
 from .models import StockData
@@ -20,14 +20,15 @@ def add_user_ticker(request):
 
             try:
                 stockdata.save()
-                saved = True
+                messages.success(request, 'Saved the stock')
             except IntegrityError:
-                messages.error(request, 'You already saved this stock.')
-                saved = False
+                messages.warning(request, 'You already saved this stock.')
 
-            return render(request, 'saved.html', {'saved': saved})
+            return redirect('/dashboard')
+
         else:
-            return messages.error(request, "Error")
+            messages.error(request, 'Enter a valid input')
+            return redirect('/dashboard')
 
 
 @login_required
